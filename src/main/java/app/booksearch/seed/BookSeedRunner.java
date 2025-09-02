@@ -1,4 +1,4 @@
-package app.booksearch.catalog.seed;
+package app.booksearch.seed;
 
 import app.booksearch.catalog.dto.BookSeedDto;
 import app.booksearch.catalog.repository.CatalogRepository;

@@ -13,6 +13,7 @@ public class BookBasicInfoDto {
     private Long id;
     private String isbn;
     private String title;
+    private String subtitle;
     private String bookCoverImageUrl;
     private String author;
     private Integer rating;
@@ -23,6 +24,7 @@ public class BookBasicInfoDto {
                 .id(b.getId())
                 .isbn(b.getIsbn())
                 .title(b.getTitle())
+                .subtitle(b.getSubtitle())
                 .bookCoverImageUrl(b.getBookCoverImageUrl())
                 .author(b.getAuthor())
                 .rating(b.getRating())
