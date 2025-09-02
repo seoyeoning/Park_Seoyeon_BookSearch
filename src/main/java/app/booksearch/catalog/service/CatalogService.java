@@ -2,18 +2,22 @@ package app.booksearch.catalog.service;
 
 import app.booksearch.catalog.domain.Book;
 import app.booksearch.catalog.dto.BookBasicInfoDto;
+import app.booksearch.catalog.dto.BookDetailInfoDto;
 import app.booksearch.catalog.dto.BookListResponseDto;
 import app.booksearch.catalog.dto.BookPageInfoDto;
 import app.booksearch.catalog.repository.CatalogRepository;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CatalogService {
 
     private final CatalogRepository catalogRepository;
@@ -38,5 +42,11 @@ public class CatalogService {
                 .build();
 
         return new BookListResponseDto(pageInfo, books);
+    }
+
+    public BookDetailInfoDto getBookById(Long id) {
+        return catalogRepository.findById(id)
+                .map(BookDetailInfoDto::from)
+                .orElseThrow(() -> new EntityNotFoundException("id: " + id + " 에 해당하는 도서를 찾을 수 없습니다.."));
     }
 }

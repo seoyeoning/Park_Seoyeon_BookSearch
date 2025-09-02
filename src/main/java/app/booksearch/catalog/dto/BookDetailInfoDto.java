@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class BookBasicInfoDto {
+public class BookDetailInfoDto {
 
     private Long id;
     private String isbn;
@@ -17,9 +17,13 @@ public class BookBasicInfoDto {
     private String author;
     private Integer rating;
     private BigDecimal price;
+    private String subtitle;
+    private String publisher;
+    private Integer published;
+    private String description;
 
-    public static BookBasicInfoDto from(Book b) {
-        return BookBasicInfoDto.builder()
+    public static BookDetailInfoDto from(Book b) {
+        return BookDetailInfoDto.builder()
                 .id(b.getId())
                 .isbn(b.getIsbn())
                 .title(b.getTitle())
@@ -27,6 +31,10 @@ public class BookBasicInfoDto {
                 .author(b.getAuthor())
                 .rating(b.getRating())
                 .price(b.getPrice())
+                .subtitle(b.getSubtitle())
+                .publisher(b.getPublisher())
+                .published(b.getPublished())
+                .description(b.getDescription())
                 .build();
     }
 
