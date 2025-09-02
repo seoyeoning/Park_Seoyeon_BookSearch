@@ -16,18 +16,24 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class SearchService {
 
     private final SearchRepository searchRepository;
+    private final TrendingKeywordService trendingKeywordService;
 
     public BookSearchResponseDto getBooksByQuery(String query, int page,
             int size) {
 
         Pageable pageable = PageRequest.of(page, size);
         SearchStrategy searchStrategy = checkSearchStrategy(query);
+
+        // 검색어 저장
+        trendingKeywordService.saveSearchKeyword(searchStrategy, query);
 
         Page<Book> searchResults;
 
