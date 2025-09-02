@@ -1,8 +1,10 @@
 package app.booksearch.search.service;
 
+import app.booksearch.search.dto.KeywordDto;
 import app.booksearch.search.dto.SearchStrategy;
 import java.time.Duration;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -40,5 +42,17 @@ public class TrendingKeywordService {
     }
 
 
+    public List<KeywordDto> getTop10TrendingKeywords() {
+        ZSetOperations<String, String> zSetOps = redisTemplate.opsForZSet();
+        Set<String> topKeywords = zSetOps.reverseRange(POPULAR_KEYWORDS_KEY, 0, 9);
+
+        if (topKeywords == null) {
+            return List.of();
+        }
+
+        return topKeywords.stream()
+                .map(KeywordDto::of)
+                .toList();
+    }
 
 }
