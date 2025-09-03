@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+  datasource:
+    url: jdbc:mysql://mysql:3306/book_search?characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+  data:
+    redis:
+      host: redis
+      timeout: 2000ms
+      port: 6379
