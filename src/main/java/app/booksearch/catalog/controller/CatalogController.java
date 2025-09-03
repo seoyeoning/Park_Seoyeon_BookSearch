@@ -3,6 +3,7 @@ package app.booksearch.catalog.controller;
 import app.booksearch.catalog.dto.BookDetailInfoDto;
 import app.booksearch.catalog.dto.BookListResponseDto;
 import app.booksearch.catalog.service.CatalogService;
+import app.booksearch.common.validator.SearchQueryValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class CatalogController {
 
     private final CatalogService catalogService;
+    private final SearchQueryValidator searchQueryValidator;
 
     @GetMapping
     public ResponseEntity<BookListResponseDto> getAllBooks(@RequestParam int page,
             @RequestParam int size) {
+        
+        searchQueryValidator.validatePage(page);
+        searchQueryValidator.validateSize(size);
+        
         return ResponseEntity.ok().body(catalogService.getAllBooks(page, size));
     }
 
